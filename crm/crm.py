@@ -20,11 +20,6 @@ import main
 
 
 def start_module():
-    table = data_manager.get_table_from_file("crm/customers.csv")
-
-    inputs = ui.get_inputs(["Please enter a number:     "], "")
-    option = inputs[0]
-
     while True:
         options = ["Show table",
                    "Add",
@@ -33,6 +28,11 @@ def start_module():
                    "What is the id of the customer with the longest name?",
                    "Which customers has subscribed to the newsletter?"]
         ui.print_menu("Customer relationship manager", options, "Back to main menu")
+        table = data_manager.get_table_from_file("crm/customers.csv")
+
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+
         try:
             if option == "1":
                 return show_table(table)
