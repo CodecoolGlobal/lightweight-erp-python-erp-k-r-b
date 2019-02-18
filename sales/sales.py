@@ -21,20 +21,19 @@ import common
 
 
 def start_module():
-    options = ["Show table",
-               "Add",
-               "Remove",
-               "Update",
-               "What is the id of the item that was sold for the lowest price?",
-               "Which items are sold between two given dates? "]
-    ui.print_menu("Sales", options, "Back to main menu")
-
-    table = data_manager.get_table_from_file("sales/sales.csv")
-
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-
     while True:
+        options = ["Show table",
+                   "Add",
+                   "Remove",
+                   "Update",
+                   "What is the id of the item that was sold for the lowest price?",
+                   "Which items are sold between two given dates? "]
+        ui.print_menu("Sales", options, "Back to main menu")
+
+        table = data_manager.get_table_from_file("sales/sales.csv")
+
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
         try:
             if option == "1":
                 show_table(table)
@@ -42,18 +41,18 @@ def start_module():
             elif option == "2":
                 return add(table)
             elif option == "3":
-                id_ = ui.get_inputs(["Please give me an ID to delete:    "], "")
+                id_ = ui.get_inputs(["Please give me an ID to delete: "], "")
                 remove(table, id_)
                 break
             elif option == "4":
-                id_ = ui.get_inputs(["Please give me an ID to update:   "], "")
+                id_ = ui.get_inputs(["Please give me an ID to update: "], "")
                 update(table, id_,)
             elif option == "5":
                 get_lowest_price_item_id(table)
                 break
             elif option == "6":
-                #table, month_from, day_from, year_from, month_to, day_to, year_to = ui.get_inputs(
-                 #   ["month_from", "day_from", "year_from", "month_to", "day_to", "year_to"], "")
+                # table, month_from, day_from, year_from, month_to, day_to, year_to = ui.get_inputs(
+                # ["month_from", "day_from", "year_from", "month_to", "day_to", "year_to"], "")
                 get_items_sold_between(table)
                 break
             elif option == "0":

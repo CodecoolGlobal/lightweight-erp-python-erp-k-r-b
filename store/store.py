@@ -19,26 +19,13 @@ import common
 
 
 def start_module():
-    options = ["    Show table",
-               "    Add",
-               "    Remove",
-               "    Update",
-               "    How many different kinds of game are available of each manufacturer?",
-               "    What is the average amount of games in stock of a given manufacturer?"]
-    ui.print_menu("Stores", options, "Back to main menu")
-
-    table = data_manager.get_table_from_file("store/games.csv")
-
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-
     while True:
-        options = ["    Show table",
-                   "    Add",
-                   "    Remove",
-                   "    Update",
-                   "    How many different kinds of game are available of each manufacturer?",
-                   "    What is the average amount of games in stock of a given manufacturer?"]
+        options = ["Show table",
+                   "Add",
+                   "Remove",
+                   "Update",
+                   "How many different kinds of game are available of each manufacturer?",
+                   "What is the average amount of games in stock of a given manufacturer?"]
         ui.print_menu("Stores", options, "Back to main menu")
 
         table = data_manager.get_table_from_file("store/games.csv")
@@ -51,10 +38,10 @@ def start_module():
             elif option == "2":
                 add(table)
             elif option == "3":
-                id_ = ui.get_inputs(["Please provide ID to remove:   "], "")
+                id_ = ui.get_inputs(["Please provide ID to remove: "], "")
                 remove(table, id_[0])
             elif option == "4":
-                id_ = ui.get_inputs(["Please give me an ID to update:   "], "")
+                id_ = ui.get_inputs(["Please give me an ID to update: "], "")
                 update(table, id_[0],)
             elif option == "5":
                 get_counts_by_manufacturers(table)
