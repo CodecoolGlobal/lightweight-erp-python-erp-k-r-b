@@ -16,80 +16,88 @@ import data_manager
 # common module
 import common
 
+import main
+
 
 def start_module():
-    """
-    Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
+    options = ["    Show table",
+               "    Add",
+               "    Remove",
+               "    Update",
+               "    What is the id of the customer with the longest name?",
+               "    Which customers has subscribed to the newsletter?"]
+    ui.print_menu("Customer relationship manager", options, "    Back to main menu")
 
-    Returns:
-        None
-    """
+    table = data_manager.get_table_from_file("crm/customers.csv")
 
-    # your code
+    inputs = ui.get_inputs(["Please enter a number:     "], "")
+    option = inputs[0]
+
+    while option:
+        ui.print_menu("Customer relationship manager", options, "    Back to main menu")
+        try:
+            if option == "1":
+                return show_table(table)
+            elif option == "2":
+                return add(table)
+            elif option == "3":
+                id_ = ui.get_inputs(["Please provide ID of customer to remove:   "], "")
+                return remove(table, id_[0])
+            elif option == "4":
+                id_ = ui.get_inputs(["Please provide ID of customer to update:   "], "")
+                return update(table, id_[0])
+            elif option == "5":
+                get_longest_name_id(table)
+                break
+            elif option == "6":
+                get_subscribed_emails(table)
+                break
+            elif option == "0":
+                return
+        except KeyError as err:
+            ui.print_error_message(str(err))
 
 
 def show_table(table):
-    """
-    Display a table
-
-    Args:
-        table (list): list of lists to be displayed.
-
-    Returns:
-        None
-    """
-
-    # your code
+    title_list = ["ID",
+                  "Name",
+                  "E-mail address",
+                  "Subscription"]
+    ui.print_table(table, title_list)
+    return start_module()
 
 
 def add(table):
-    """
-    Asks user for input and adds it into the table.
-
-    Args:
-        table (list): table to add new record to
-
-    Returns:
-        list: Table with a new record
-    """
-
-    # your code
-
+    list_labels = ["Full name: ",
+                   "E-mail address: ",
+                   "Subscription (1/0): "]
+    new_id = common.generate_random()
+    new_data = ui.get_inputs(list_labels, "")
+    new_data.insert(0, new_id)
+    table = common.add_line_to_file("crm/customers.csv", new_data)
     return table
 
 
 def remove(table, id_):
-    """
-    Remove a record with a given id from the table.
-
-    Args:
-        table (list): table to remove a record from
-        id_ (str): id of a record to be removed
-
-    Returns:
-        list: Table without specified record.
-    """
-
-    # your code
-
+    for i in range(len(table)):
+        if table[i][0] == id_:
+            del table[i]
+            break
+    data_manager.write_table_to_file("crm/customers.csv", table)
     return table
 
 
 def update(table, id_):
-    """
-    Updates specified record in the table. Ask users for new data.
+    for sublist in table:
+        try:
+            if id_[0] in sublist:
+                inputs = ui.get_inputs(["Full name: ", "E-mail address: ", "Subscription (1/0): "], "")
+                for item in range(len(sublist)):
+                    sublist[item] = inputs[item]
+        except KeyError as err:
+            ui.print_error_message(str(err))
 
-    Args:
-        table (list): list in which record should be updated
-        id_ (str): id of a record to update
-
-    Returns:
-        list: table with updated record
-    """
-
-    # your code
+    data_manager.write_table_to_file("crm/customers.csv", table)
 
     return table
 
@@ -108,12 +116,15 @@ def get_longest_name_id(table):
             string: id of the longest name (if there are more than one, return
                 the last by alphabetical order of the names)
         """
+    name = []
+    for i, value in enumerate(table):
+        name.append(value[1])
+    longest_name = (max(name, key=len))
+    for i, value in enumerate(table):
+        if longest_name in value[1]:
+            ui.print_result(value[0],label="")
 
-    # your code
 
-
-# the question: Which customers has subscribed to the newsletter?
-# return type: list of strings (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
     """
         Question: Which customers has subscribed to the newsletter?
@@ -124,5 +135,17 @@ def get_subscribed_emails(table):
         Returns:
             list: list of strings (where a string is like "email;name")
         """
+    
+    
+    subscribed = []
+    email = []
+    for i, value in enumerate(table):
+        if "1" in value:
+            subscribed.append(value[1])
+            email.append(value[2])
+    subscribed_plebs = dict(zip(subscribed, email))
+    subscribed_plebs = str(subscribed_plebs)
+    ui.print_result(subscribed_plebs,label="")
+    
 
-    # your code
+

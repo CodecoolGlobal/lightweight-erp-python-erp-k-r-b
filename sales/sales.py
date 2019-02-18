@@ -20,79 +20,83 @@ import common
 
 
 def start_module():
-    """
-    Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
+    options = ["Show table",
+               "Add",
+               "Remove",
+               "Update",
+               "What is the id of the item that was sold for the lowest price?",
+               "Which items are sold between two given dates? "]
+    ui.print_menu("Sales", options, "Back to main menu")
 
-    Returns:
-        None
-    """
+    table = data_manager.get_table_from_file("sales/sales.csv")
 
-    # your code
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+
+    while True:
+        try:
+            if option == "1":
+                show_table(table)
+                break
+            elif option == "2":
+                return add(table)
+            elif option == "3":
+                id_ = ui.get_inputs(["Please give me an ID to delete:    "], "")
+                remove(table, id_)
+                break
+            elif option == "4":
+                id_ = ui.get_inputs(["Please give me an ID to update:   "], "")
+                update(table, id_,)
+            elif option == "5":
+                get_lowest_price_item_id(table)
+                break
+            elif option == "6":
+                #table, month_from, day_from, year_from, month_to, day_to, year_to = ui.get_inputs(
+                 #   ["month_from", "day_from", "year_from", "month_to", "day_to", "year_to"], "")
+                get_items_sold_between(table)
+                break
+            elif option == "0":
+                break
+        except KeyError as err:
+            ui.print_error_message(str(err))
 
 
 def show_table(table):
-    """
-    Display a table
-
-    Args:
-        table (list): list of lists to be displayed.
-
-    Returns:
-        None
-    """
-
-    # your code
+    title_list = ["ID", "Title", "Price", "Month", "Day", "Year"]
+    ui.print_table(table, title_list)
+    return start_module()
 
 
 def add(table):
-    """
-    Asks user for input and adds it into the table.
-
-    Args:
-        table (list): table to add new record to
-
-    Returns:
-        list: Table with a new record
-    """
-
-    # your code
-
+    list_labels = ["Title",
+                   "Price",
+                   "Month",
+                   "Day",
+                   "Year"]
+    new_id = common.generate_random()
+    new_data = ui.get_inputs(list_labels, "")
+    new_data.insert(0, new_id)
+    table = common.add_line_to_file("sales/sales.csv", new_data)
     return table
 
 
 def remove(table, id_):
-    """
-    Remove a record with a given id from the table.
-
-    Args:
-        table (list): table to remove a record from
-        id_ (str): id of a record to be removed
-
-    Returns:
-        list: Table without specified record.
-    """
-
-    # your code
-
-    return table
+    for i in range(len(table)):
+        if table[i][0] == id_:
+            del table[i]
+            break
+        data_manager.write_table_to_file("sales/sales.csv", table)
+        return table
 
 
 def update(table, id_):
-    """
-    Updates specified record in the table. Ask users for new data.
+    for sublist in table:
+        if id_[0] in sublist:
+            inputs = ui.get_inputs(["ID", "Title", "Price", "Month", "Day", "Year"], "")
+            for item in range(len(sublist)):
+                sublist[item] = inputs[item]
 
-    Args:
-        table (list): list in which record should be updated
-        id_ (str): id of a record to update
-
-    Returns:
-        list: table with updated record
-    """
-
-    # your code
-
+    data_manager.write_table_to_file("sales/sales.csv", table)
     return table
 
 
@@ -110,11 +114,17 @@ def get_lowest_price_item_id(table):
     Returns:
          string: id
     """
+    price = []
+    for i, value in enumerate(table):
+        price.append(value[2])
+    lowest_sold = min(price)
+    for i, value in enumerate(table):
+        if lowest_sold in value[2]:
+            # print(value[0])
+            ui.print_result(value[0], label="")
 
-    # your code
 
-
-def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
+def get_items_sold_between(table):
     """
     Question: Which items are sold between two given dates? (from_date < sale_date < to_date)
 
@@ -130,5 +140,24 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
     Returns:
         list: list of lists (the filtered table)
     """
+    date = []
+    for i, value in enumerate(table):
+        date.append(value[3])
+        date.append(value[4])
+        date.append(value[5])
+    seq = date
+    [seq[i:i+3] for i in range(0, len(seq), 3)]
+    group_dates=[seq[i:i+3] for i in range(0, len(seq), 3)]
+    inputs = ui.get_inputs(["month_from", "day_from", "year_from", "month_to", "day_to", "year_to"], "")
+    
+    
 
-    # your code
+
+    # subs = [[]]
+    # for i in range(len(date)):
+    #        n = i+3
+    #
+    #        sub = date[i:n]
+    #        subs.append(sub)
+
+    # print(subs)

@@ -20,79 +20,85 @@ import common
 
 
 def start_module():
-    """
-    Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
+    options = ["Show table",
+               "Add",
+               "Remove",
+               "Update",
+               "Which year has the highest profit?",
+               "What is the average (per item) profit in a given year?"]
+    ui.print_menu("Stores", options, "Back to main menu")
 
-    Returns:
-        None
-    """
+    table = data_manager.get_table_from_file("accounting/items.csv")
 
-    # you code
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+
+    while True:
+        try:
+            if option == "1":
+                show_table(table)
+                break
+            elif option == "2":
+                return add(table)
+            elif option == "3":
+                id_ = ui.get_inputs(["Please provide ID to remove:   "], "")
+                remove(table, id_)
+                # show_table(table)
+            elif option == "4":
+                id_ = ui.get_inputs(["Please give me an ID to update:   "], "")
+                update(table, id_,)
+                # show_table(table)
+            elif option == "5":
+                which_year_max(table)
+                break
+            elif option == "6":
+                year = ui.get_inputs(["Please give me a Year to calculate:  "], "")
+                avg_amount(table, year)
+            elif option == "0":
+                break
+        except KeyError as err:
+            ui.print_error_message(str(err))
 
 
 def show_table(table):
-    """
-    Display a table
-
-    Args:
-        table (list): list of lists to be displayed.
-
-    Returns:
-        None
-    """
-
-    # your code
+    table = data_manager.get_table_from_file("accounting/items.csv")
+    title_list = ["ID", "Month", "Day", "Year", "Type", "Amount"]
+    ui.print_table(table, title_list)
+    return start_module()
 
 
 def add(table):
-    """
-    Asks user for input and adds it into the table.
-
-    Args:
-        table (list): table to add new record to
-
-    Returns:
-        list: Table with a new record
-    """
-
-    # your code
-
+    list_labels = ["Month",
+                   "Day",
+                   "Year",
+                   "Type",
+                   "Amount"]
+    new_id = common.generate_random()
+    new_data = ui.get_inputs(list_labels, "")
+    new_data.insert(0, new_id)
+    table = common.add_line_to_file("accounting/items.csv", new_data)
     return table
 
 
 def remove(table, id_):
-    """
-    Remove a record with a given id from the table.
-
-    Args:
-        table (list): table to remove a record from
-        id_ (str): id of a record to be removed
-
-    Returns:
-        list: Table without specified record.
-    """
-
-    # your code
+    for i in range(len(table)):
+        if table[i][0] == id_:
+            del table[i]
+            break
+        data_manager.write_table_to_file("accounting/items.csv", table)
+        return table
 
     return table
 
 
 def update(table, id_):
-    """
-    Updates specified record in the table. Ask users for new data.
+    for sublist in table:
+        if id_[0] in sublist:
+            inputs = ui.get_inputs(["ID", "Month", "Day", "Year", "Type", "Amount"], "")
+            for item in range(len(sublist)):
+                sublist[item] = inputs[item]
 
-    Args:
-        table (list): list in which record should be updated
-        id_ (str): id of a record to update
-
-    Returns:
-        list: table with updated record
-    """
-
-    # your code
-
+    data_manager.write_table_to_file("accounting/items.csv", table)
     return table
 
 
@@ -109,8 +115,20 @@ def which_year_max(table):
     Returns:
         number
     """
-
-    # your code
+    profits = []
+    for i, value in enumerate(table):
+        if "in" in value:
+            profits.append(value)
+    number = []
+    for i, value in enumerate(profits):
+        number.append(value[5])
+    # print(number)
+    number = list(map(int, number))
+    max_profit = (max(number))
+    max_profit = str(max_profit)
+    for i, value in enumerate(table):
+        if max_profit in value[5]:
+            ui.print_result(value[3], label="")
 
 
 def avg_amount(table, year):
@@ -124,5 +142,24 @@ def avg_amount(table, year):
     Returns:
         number
     """
+    year_s = []
+    # for i, value in enumerate(table):
+    #    if year[0] in value:
+    #        print(value)
+    for i, value in enumerate(table):
+        if year[0] in value:
+            year_s.append(value)
+    profit = []
+    items = []
 
-    # your code
+    for i, value in enumerate(year_s):
+        if "in" in value:
+            profit.append(value[5])
+        if "out" in value:
+            items.append(value[5])
+    # print(profit,items)
+    profit = list(map(int, profit))
+    items = list(map(int, items))
+    halo = (sum(profit) / sum(items))
+    print(halo * len(year_s))
+    

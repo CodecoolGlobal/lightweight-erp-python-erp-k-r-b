@@ -3,7 +3,7 @@
 
 
 import sys
-import ui  # User Interface
+import ui  # User Interfac1e
 # Store module
 from store import store
 # Human Resources module
