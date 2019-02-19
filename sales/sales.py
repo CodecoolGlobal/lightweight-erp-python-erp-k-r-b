@@ -62,7 +62,7 @@ def start_module():
 
 
 def show_table(table):
-    title_list = ["ID", "Title", "Price", "Month", "Day", "Year"]
+    title_list = ["ID", "Title", "Price", "Month", "Day", "Year", "Customer ID"]
     ui.print_table(table, title_list)
     return start_module()
 
@@ -149,7 +149,6 @@ def get_items_sold_between(table):
 
 
 def get_title_by_id(id):
-
     """
     Reads the table with the help of the data_manager module.
     Returns the title (str) of the item with the given id (str) on None om case of non-existing id.
@@ -165,7 +164,6 @@ def get_title_by_id(id):
 
 
 def get_title_by_id_from_table(table, id):
-
     """
     Returns the title (str) of the item with the given id (str) on None om case of non-existing id.
 
