@@ -26,7 +26,9 @@ def start_module():
                    "Remove",
                    "Update",
                    "What is the id of the customer with the longest name?",
-                   "Which customers has subscribed to the newsletter?"]
+                   "Which customers has subscribed to the newsletter?",
+                   "Get Customer name by ID",
+                   "Get Customer name by ID  from the Table"]
         ui.print_menu("Customer relationship manager", options, "Back to main menu")
         table = data_manager.get_table_from_file("crm/customers.csv")
 
@@ -171,7 +173,7 @@ def get_name_by_id(id_):
     # your code
 
 
-def get_name_by_id_from_table(table, id_:
+def get_name_by_id_from_table(table, id_):
     """
     Returns the name (str) of the customer with the given id (str) on None om case of non-existing id.
 
