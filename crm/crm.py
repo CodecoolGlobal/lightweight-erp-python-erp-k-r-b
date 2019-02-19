@@ -50,6 +50,11 @@ def start_module():
             elif option == "6":
                 get_subscribed_emails(table)
                 break
+            elif option == "7":
+                get_name_by_id(id_)
+                break
+            elif option == "8":
+                get_name_by_id_from_table(table,id_)
             elif option == "0":
                 return
         except KeyError as err:
@@ -151,7 +156,7 @@ def get_subscribed_emails(table):
 # --------------------------------
 
 
-def get_name_by_id(id):
+def get_name_by_id(id_):
     """
     Reads the table with the help of the data_manager module.
     Returns the name (str) of the customer with the given id (str) on None om case of non-existing id.
@@ -166,7 +171,7 @@ def get_name_by_id(id):
     # your code
 
 
-def get_name_by_id_from_table(table, id):
+def get_name_by_id_from_table(table, id_:
     """
     Returns the name (str) of the customer with the given id (str) on None om case of non-existing id.
 
