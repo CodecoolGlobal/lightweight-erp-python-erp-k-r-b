@@ -16,18 +16,46 @@ from crm import crm
 
 
 def start_module():
-    """
-    Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
+    while True:
+        options = ["Who didn't buy nothing?",
+                   "Last buyer name",
+                   "Last buyer ID",
+                   "The buyer who spent the most, and the money",
+                   "The ID who spent the most, and the money",
+                   "Most frequent buyers ",
+                   "Most frequent buyers, ID"]
+        ui.print_menu("Data_analyser", options, "Back to main menu")
 
-    Returns:
-        None
-    """
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+        try:
+            if option == "1":
+                customers_who_did_not_buy_nothing()
+                break
+            elif option == "2":
+                return get_the_last_buyer_name()
+            elif option == "3":
+                get_the_last_buyer_id()
+                break
+            elif option == "4":
+                get_the_buyer_name_spent_most_and_the_money_spent()
+            elif option == "5":
+                get_the_buyer_id_spent_most_and_the_money_spent()
+                break
+            elif option == "6":
+                get_the_most_frequent_buyers_names(num=1)
+                break
+            elif option == "7":
+                get_the_most_frequent_buyers_ids(num=1)
+                break
+            elif option == "0":
+                break
+        except KeyError as err:
+            ui.print_error_message(str(err))
 
-    # your code
 
-    pass
+def customers_who_did_not_buy_nothing():
+    """"""
 
 
 def get_the_last_buyer_name():
