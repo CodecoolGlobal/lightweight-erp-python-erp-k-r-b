@@ -9,7 +9,7 @@ from store import store
 # Human Resources module
 from hr import hr
 # Tool manager module
-from inventory import ~inventory
+from inventory import inventory
 # Accounting module//
 from accounting import accounting
 # Sales module
