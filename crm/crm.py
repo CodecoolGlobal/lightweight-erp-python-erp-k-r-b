@@ -170,7 +170,7 @@ def get_name_by_id(id_):
     table = data_manager.get_table_from_file("crm/customers.csv")
     for i in range(len(table)):
         if table[i][0] == id_:
-            ui.print_result(str(table[i][1]),label="")
+            ui.print_result(str(table[i][1]), label="")
         else:
             return None
 
@@ -191,6 +191,6 @@ def get_name_by_id_from_table(table, id_):
     table = data_manager.get_table_from_file("crm/customers.csv")
     for i in range(len(table)):
         if table[i][0] == id_:
-            ui.print_result(str(table[i][1]),label="")
+            ui.print_result(str(table[i][1]), label="")
         else:
             return None

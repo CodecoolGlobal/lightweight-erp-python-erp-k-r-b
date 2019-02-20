@@ -27,7 +27,8 @@ def start_module():
                    "Remove",
                    "Update",
                    "What is the id of the item that was sold for the lowest price?",
-                   "Which items are sold between two given dates? "]
+                   "Which items are sold between two given dates? ",
+                   "Get Title by ID"]
         ui.print_menu("Sales", options, "Back to main menu")
 
         table = data_manager.get_table_from_file("sales/sales.csv")
@@ -37,24 +38,26 @@ def start_module():
         try:
             if option == "1":
                 show_table(table)
-                break
+
             elif option == "2":
-                return add(table)
+                add(table)
             elif option == "3":
                 id_ = ui.get_inputs(["Please give me an ID to delete: "], "")
                 remove(table, id_)
-                break
+
             elif option == "4":
                 id_ = ui.get_inputs(["Please give me an ID to update: "], "")
-                update(table, id_,)
+                update(table, id_)
             elif option == "5":
                 get_lowest_price_item_id(table)
-                break
+
             elif option == "6":
                 # table, month_from, day_from, year_from, month_to, day_to, year_to = ui.get_inputs(
                 # ["month_from", "day_from", "year_from", "month_to", "day_to", "year_to"], "")
                 get_items_sold_between(table)
-                break
+            elif option == "9":
+                id_ = ui.get_inputs(["Please give me an ID : "], "")
+                get_title_by_id(id_)
             elif option == "0":
                 break
         except KeyError as err:
@@ -148,7 +151,7 @@ def get_items_sold_between(table):
 # --------------------------------
 
 
-def get_title_by_id(id):
+def get_title_by_id(id_):
     """
     Reads the table with the help of the data_manager module.
     Returns the title (str) of the item with the given id (str) on None om case of non-existing id.
@@ -161,6 +164,12 @@ def get_title_by_id(id):
     """
 
     # your code
+    table = data_manager.get_table_from_file("sales/sales.csv")
+    for i in range(len(table)):
+        if table[i][0] == id_:
+            ui.print_result(str(table[i][1]), label="")
+        else:
+            return None
 
 
 def get_title_by_id_from_table(table, id):
