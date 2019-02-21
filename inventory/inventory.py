@@ -24,21 +24,18 @@ import common
 
 
 def start_module():
-    options = ["    Show table",
-               "    Add",
-               "    Remove",
-               "    Update",
-               "    Which items have not exceeded their durability yet?",
-               "    What are the average durability times for each manufacturer?"]
-    ui.print_menu("Customer relationship manager", options, "    Back to main menu")
+    while True:
+        options = ["Show table",
+                   "Add",
+                   "Remove",
+                   "Update",
+                   "Which items have not exceeded their durability yet?",
+                   "What are the average durability times for each manufacturer?"]
+        ui.print_menu("Customer relationship manager", options, "Back to main menu")
+        table = data_manager.get_table_from_file("inventory/inventory.csv")
 
-    table = data_manager.get_table_from_file("inventory/inventory.csv")
-
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-
-    while option:
-        ui.print_menu("Customer relationship manager", options, "    Back to main menu")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
         try:
             if option == "1":
                 return show_table(table)
@@ -154,8 +151,7 @@ def get_average_durability_by_manufacturers(table):
                 # print(product_quant_by_man)
         current_avg = manu_sum/product_quant_by_man
         manu_avgs.append(current_avg)
-    ui.print_result(dict(zip(manu_0, manu_avgs)),label="")
-    
+    ui.print_result(dict(zip(manu_0, manu_avgs)), label="")
 
     """
     Question: What are the average durability times for each manufacturer?

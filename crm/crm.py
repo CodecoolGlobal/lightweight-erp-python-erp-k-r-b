@@ -20,31 +20,29 @@ import main
 
 
 def start_module():
-    options = ["    Show table",
-               "    Add",
-               "    Remove",
-               "    Update",
-               "    What is the id of the customer with the longest name?",
-               "    Which customers has subscribed to the newsletter?"]
-    ui.print_menu("Customer relationship manager", options, "    Back to main menu")
+    while True:
+        options = ["Show table",
+                   "Add",
+                   "Remove",
+                   "Update",
+                   "What is the id of the customer with the longest name?",
+                   "Which customers has subscribed to the newsletter?"]
+        ui.print_menu("Customer relationship manager", options, "Back to main menu")
+        table = data_manager.get_table_from_file("crm/customers.csv")
 
-    table = data_manager.get_table_from_file("crm/customers.csv")
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
 
-    inputs = ui.get_inputs(["Please enter a number:     "], "")
-    option = inputs[0]
-
-    while option:
-        ui.print_menu("Customer relationship manager", options, "    Back to main menu")
         try:
             if option == "1":
                 return show_table(table)
             elif option == "2":
                 return add(table)
             elif option == "3":
-                id_ = ui.get_inputs(["Please provide ID of customer to remove:   "], "")
+                id_ = ui.get_inputs(["Please provide ID of customer to remove: "], "")
                 return remove(table, id_[0])
             elif option == "4":
-                id_ = ui.get_inputs(["Please provide ID of customer to update:   "], "")
+                id_ = ui.get_inputs(["Please provide ID of customer to update: "], "")
                 return update(table, id_[0])
             elif option == "5":
                 get_longest_name_id(table)
@@ -122,7 +120,7 @@ def get_longest_name_id(table):
     longest_name = (max(name, key=len))
     for i, value in enumerate(table):
         if longest_name in value[1]:
-            ui.print_result(value[0],label="")
+            ui.print_result(value[0], label="")
 
 
 def get_subscribed_emails(table):
@@ -135,8 +133,7 @@ def get_subscribed_emails(table):
         Returns:
             list: list of strings (where a string is like "email;name")
         """
-    
-    
+
     subscribed = []
     email = []
     for i, value in enumerate(table):
@@ -145,9 +142,7 @@ def get_subscribed_emails(table):
             email.append(value[2])
     subscribed_plebs = dict(zip(subscribed, email))
     subscribed_plebs = str(subscribed_plebs)
-    ui.print_result(subscribed_plebs,label="")
-    
-
+    ui.print_result(subscribed_plebs, label="")
 
     # your code
 
@@ -169,7 +164,6 @@ def get_name_by_id(id):
     """
 
     # your code
-
 
 
 def get_name_by_id_from_table(table, id):

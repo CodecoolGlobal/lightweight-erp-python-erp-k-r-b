@@ -20,20 +20,20 @@ import common
 
 
 def start_module():
-    options = ["Show table",
-               "Add",
-               "Remove",
-               "Update",
-               "Which year has the highest profit?",
-               "What is the average (per item) profit in a given year?"]
-    ui.print_menu("Stores", options, "Back to main menu")
-
-    table = data_manager.get_table_from_file("accounting/items.csv")
-
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-
     while True:
+        options = ["Show table",
+                   "Add",
+                   "Remove",
+                   "Update",
+                   "Which year has the highest profit?",
+                   "What is the average (per item) profit in a given year?"]
+        ui.print_menu("Stores", options, "Back to main menu")
+
+        table = data_manager.get_table_from_file("accounting/items.csv")
+
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
+
         try:
             if option == "1":
                 show_table(table)
@@ -41,18 +41,18 @@ def start_module():
             elif option == "2":
                 return add(table)
             elif option == "3":
-                id_ = ui.get_inputs(["Please provide ID to remove:   "], "")
+                id_ = ui.get_inputs(["Please provide ID to remove: "], "")
                 remove(table, id_)
                 # show_table(table)
             elif option == "4":
-                id_ = ui.get_inputs(["Please give me an ID to update:   "], "")
+                id_ = ui.get_inputs(["Please give me an ID to update: "], "")
                 update(table, id_,)
                 # show_table(table)
             elif option == "5":
                 which_year_max(table)
                 break
             elif option == "6":
-                year = ui.get_inputs(["Please give me a Year to calculate:  "], "")
+                year = ui.get_inputs(["Please give me a Year to calculate: "], "")
                 avg_amount(table, year)
             elif option == "0":
                 break
@@ -162,4 +162,3 @@ def avg_amount(table, year):
     items = list(map(int, items))
     halo = (sum(profit) / sum(items))
     print(halo * len(year_s))
-    

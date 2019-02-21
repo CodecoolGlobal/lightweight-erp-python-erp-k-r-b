@@ -17,20 +17,19 @@ import common
 
 
 def start_module():
-    options = ["Show table",
-               "Add",
-               "Remove",
-               "Update",
-               "Who is the oldest person?",
-               "Who is the closest to the average age?"]
-    ui.print_menu("Human Resources", options, "Back to main menu")
-
-    table = data_manager.get_table_from_file("hr/persons.csv")
-
-    inputs = ui.get_inputs(["Please enter a number:     "], "")
-    option = inputs[0]
-
     while True:
+        options = ["Show table",
+                   "Add",
+                   "Remove",
+                   "Update",
+                   "Who is the oldest person?",
+                   "Who is the closest to the average age?"]
+        ui.print_menu("Human Resources", options, "Back to main menu")
+
+        table = data_manager.get_table_from_file("hr/persons.csv")
+
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
         try:
             if option == "1":
                 show_table(table)
@@ -38,11 +37,11 @@ def start_module():
             elif option == "2":
                 return add(table)
             elif option == "3":
-                id_ = ui.get_inputs(["Please provide ID to remove:   "], "")
+                id_ = ui.get_inputs(["Please provide ID to remove: "], "")
                 remove(table, id_)
                 break
             elif option == "4":
-                id_ = ui.get_inputs(["Please give me an ID to update:   "], "")
+                id_ = ui.get_inputs(["Please give me an ID to update: "], "")
                 update(table, id_,)
             elif option == "5":
                 get_oldest_person(table)
@@ -134,23 +133,22 @@ def get_persons_closest_to_average(table):
         list: list of strings (name or names if there are two more with the same value)
     """
 
-    sum = 0                                     #REFACTOR ACAP
+    sum = 0                                     # REFACTOR ASAP
     to_closest = []
     for i, value in enumerate(table):
         to_closest.append(value[2])
     to_closest = list(map(int, to_closest))  # convert list to integers
     for num in to_closest:
         sum = sum + num
-    average = sum / len(to_closest)             #get average
+    average = sum / len(to_closest)             # get average
     closest = to_closest[0]
     for i in range(1, len(to_closest)):
-        if abs(to_closest[i] - average) < abs(closest - average):       #calculate which year is the closest to the average
+        if abs(to_closest[i] - average) < abs(closest - average):  # calculate which year is the closest to the average
             closest = to_closest[i]
-    closest = str(closest)                      #convert integers to string :'D
-    for i,value in enumerate(table):
+    closest = str(closest)                      # convert integers to string :'D
+    for i, value in enumerate(table):
         if closest in value[2]:
             print(value[1])
-
 
 
 def takeClosest(myList, myNumber):
