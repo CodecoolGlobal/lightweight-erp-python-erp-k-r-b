@@ -17,39 +17,45 @@ from crm import crm
 
 def start_module():
     while True:
-        options = ["Get the last buyer name",
-                   "Get the last buyer ID",
-                   "Get the buyer name spent most and the money spent",
-                   "Get the buyer ID spent most and the money spent",
-                   "What is the id of the customer with the longest name?",
-                   "Which customers has subscribed to the newsletter?"]
-        ui.print_menu("Customer relationship manager", options, "Back to main menu")
-        table = data_manager.get_table_from_file("crm/customers.csv")
+        options = ["Who didn't buy nothing?",
+                   "Last buyer name",
+                   "Last buyer ID",
+                   "The buyer who spent the most, and the money",
+                   "The ID who spent the most, and the money",
+                   "Most frequent buyers ",
+                   "Most frequent buyers, ID"]
+        ui.print_menu("Data_analyser", options, "Back to main menu")
 
         inputs = ui.get_inputs(["Please enter a number: "], "")
         option = inputs[0]
-
         try:
             if option == "1":
-                return show_table(table)
+                customers_who_did_not_buy_nothing()
+                break
             elif option == "2":
-                return add(table)
+                return get_the_last_buyer_name()
             elif option == "3":
-                id_ = ui.get_inputs(["Please provide ID of customer to remove: "], "")
-                return remove(table, id_[0])
+                get_the_last_buyer_id()
+                break
             elif option == "4":
-                id_ = ui.get_inputs(["Please provide ID of customer to update: "], "")
-                return update(table, id_[0])
+                get_the_buyer_name_spent_most_and_the_money_spent()
             elif option == "5":
-                get_longest_name_id(table)
+                get_the_buyer_id_spent_most_and_the_money_spent()
                 break
             elif option == "6":
-                get_subscribed_emails(table)
+                get_the_most_frequent_buyers_names(num=1)
+                break
+            elif option == "7":
+                get_the_most_frequent_buyers_ids(num=1)
                 break
             elif option == "0":
-                return
+                break
         except KeyError as err:
             ui.print_error_message(str(err))
+
+
+def customers_who_did_not_buy_nothing():
+    """"""
 
 
 def get_the_last_buyer_name():
