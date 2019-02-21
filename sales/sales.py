@@ -185,6 +185,12 @@ def get_title_by_id_from_table(table, id):
     """
 
     # your code
+    table = data_manager.get_table_from_file("sales/sales.csv")
+    for i in range(len(table)):
+        if table[i][0] == id_:
+            ui.print_result(str(table[i][1]), label="")
+        else:
+            return None
 
 
 def get_item_id_sold_last():
