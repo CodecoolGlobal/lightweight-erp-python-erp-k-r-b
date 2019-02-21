@@ -26,7 +26,9 @@ def start_module():
                    "Remove",
                    "Update",
                    "What is the id of the customer with the longest name?",
-                   "Which customers has subscribed to the newsletter?"]
+                   "Which customers has subscribed to the newsletter?",
+                   "Get Customer name by ID",
+                   "Get Customer name by ID  from the Table"]
         ui.print_menu("Customer relationship manager", options, "Back to main menu")
         table = data_manager.get_table_from_file("crm/customers.csv")
 
@@ -35,21 +37,24 @@ def start_module():
 
         try:
             if option == "1":
-                return show_table(table)
+                show_table(table)
             elif option == "2":
-                return add(table)
+                add(table)
             elif option == "3":
                 id_ = ui.get_inputs(["Please provide ID of customer to remove: "], "")
-                return remove(table, id_[0])
+                remove(table, id_[0])
             elif option == "4":
                 id_ = ui.get_inputs(["Please provide ID of customer to update: "], "")
-                return update(table, id_[0])
+                update(table, id_[0])
             elif option == "5":
                 get_longest_name_id(table)
-                break
             elif option == "6":
                 get_subscribed_emails(table)
-                break
+            elif option == "7":
+                id_ = ui.get_inputs(["Please provide ID of customer to update: "], "")
+                get_name_by_id(id_[0])
+            elif option == "8":
+                get_name_by_id_from_table(table, id)
             elif option == "0":
                 return
         except KeyError as err:
@@ -151,10 +156,10 @@ def get_subscribed_emails(table):
 # --------------------------------
 
 
-def get_name_by_id(id):
+def get_name_by_id(id_):
     """
     Reads the table with the help of the data_manager module.
-    Returns the name (str) of the customer with the given id (str) on None om case of non-existing id.
+    Returns the name (str) of the customer with the given id (str) in None om case of non-existing id.
 
     Args:
         id (str): the id of the customer
@@ -162,11 +167,15 @@ def get_name_by_id(id):
     Returns:
         str: the name of the customer
     """
+    table = data_manager.get_table_from_file("crm/customers.csv")
+    for i in range(len(table)):
+        if table[i][0] == id_:
+            ui.print_result(str(table[i][1]), label="")
+        else:
+            return None
 
-    # your code
 
-
-def get_name_by_id_from_table(table, id):
+def get_name_by_id_from_table(table, id_):
     """
     Returns the name (str) of the customer with the given id (str) on None om case of non-existing id.
 
@@ -179,3 +188,9 @@ def get_name_by_id_from_table(table, id):
     """
 
     # your code
+    table = data_manager.get_table_from_file("crm/customers.csv")
+    for i in range(len(table)):
+        if table[i][0] == id_:
+            ui.print_result(str(table[i][1]), label="")
+        else:
+            return None
