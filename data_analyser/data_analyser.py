@@ -16,18 +16,40 @@ from crm import crm
 
 
 def start_module():
-    """
-    Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
+    while True:
+        options = ["Get the last buyer name",
+                   "Get the last buyer ID",
+                   "Get the buyer name spent most and the money spent",
+                   "Get the buyer ID spent most and the money spent",
+                   "What is the id of the customer with the longest name?",
+                   "Which customers has subscribed to the newsletter?"]
+        ui.print_menu("Customer relationship manager", options, "Back to main menu")
+        table = data_manager.get_table_from_file("crm/customers.csv")
 
-    Returns:
-        None
-    """
+        inputs = ui.get_inputs(["Please enter a number: "], "")
+        option = inputs[0]
 
-    # your code
-
-    pass
+        try:
+            if option == "1":
+                return show_table(table)
+            elif option == "2":
+                return add(table)
+            elif option == "3":
+                id_ = ui.get_inputs(["Please provide ID of customer to remove: "], "")
+                return remove(table, id_[0])
+            elif option == "4":
+                id_ = ui.get_inputs(["Please provide ID of customer to update: "], "")
+                return update(table, id_[0])
+            elif option == "5":
+                get_longest_name_id(table)
+                break
+            elif option == "6":
+                get_subscribed_emails(table)
+                break
+            elif option == "0":
+                return
+        except KeyError as err:
+            ui.print_error_message(str(err))
 
 
 def get_the_last_buyer_name():
